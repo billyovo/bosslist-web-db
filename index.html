@@ -18,7 +18,12 @@
         font-size: 60px;
         color: white;
     }
-
+    body{
+        background-image: url('background.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
     html, body, .container-fluid{
         padding: 0;
         margin: 0;
@@ -70,6 +75,14 @@
         margin-left: 0.5rem;
     }
 
+    .playerRecord{
+        background-color: white;
+        border-radius: 15px;
+    }
+    table{
+        border-collapse: separate;
+        border-spacing: 5px;
+    }
 </style>
 
 <script>
@@ -96,7 +109,7 @@
     });
 </script>
 
-<body style="background-color: rgb(247,247,247);">
+<body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <ul class="navbar-nav">
             <li class="nav-item active px-2">
@@ -152,7 +165,7 @@
                         <th style="background-color: blue;">D</th>
                     </tr>
                     <tr>
-                        <th class="playerRecord w-100">
+                        <th class="playerRecord ml-1">
                             <img src="https://www.w3schools.com/w3css/img_lights.jpg" height="45" width="45" class="float-left">
                             <span class="float-left">test</span>
                             <input class="form-check-input hitted float-right position-relative" type="checkbox" >
@@ -167,14 +180,14 @@
                         <th style="background-color: lightgreen;">E</th>
                     </tr>
                     <tr>
-                        <th class="playerRecord w-100">
+                        <th class="playerRecord ml-1">
                             <img src="https://www.w3schools.com/w3css/img_lights.jpg" height="45" width="45" class="float-left">
                             <span class="float-left">test</span>
                             <input class="form-check-input hitted float-right position-relative" type="checkbox" >
                         </th>
                     </tr>
                     <tr>
-                        <th class="playerRecord w-100">
+                        <th class="playerRecord ml-1">
                             <img src="https://www.w3schools.com/w3css/img_lights.jpg" height="45" width="45" class="float-left">
                             <span class="float-left">test</span>
                             <input class="form-check-input hitted float-right position-relative" type="checkbox" >
