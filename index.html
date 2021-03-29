@@ -208,10 +208,11 @@
         $(".header").click(function(){
             let result = [];
             $(this).siblings().each(function () {
-                if($(this).find('span').css('text-decoration').indexOf('line-through')!==-1){
+                if($(this).find('span').css('text-decoration').indexOf('line-through')===-1){
                     result.push($(this).find('span').text());
                 }
             });
+            navigator.clipboard.writeText(result.map(element=>'@'+element).join(' ')+`, ${boss_hour}:30有空打 :${$(this).find('span').text()}boss: 嗎~?`);
         })
     });
     //<span style="border: 5px solid white; border-radius:50%; padding: 0px 8%"> A </span>
