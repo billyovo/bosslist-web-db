@@ -1,1 +1,1 @@
-const ENDPOINT = "https://discord-bosslist-bot.herokuapp.com";
+const ENDPOINT = "https://billy-gay-bot.herokuapp.com";
