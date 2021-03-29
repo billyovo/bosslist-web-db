@@ -112,12 +112,14 @@
         })
         .finally(()=>{
             players.forEach(element => {            //write data to website
-            $(`#${element.boss1} tr:last`).after(`      
-                <th class="playerRecord ml-1">
-                    <img src="${element.avatar}" height="50" width="50" class="float-left">
-                    <span class="float-left playerName ${element.hitted1?"hasHitted":null}">${element.name}</span>
-                    <input class="form-check-input hitted float-right position-relative" type="checkbox" ${element.hitted1?"checked":null}>
-                </th>
+            $(`#${element.boss1} tr:last`).after(` 
+                <tr class="ml-1">
+                    <th class="playerRecord">
+                        <img src="${element.avatar}" height="50" width="50" class="float-left">
+                        <span class="float-left playerName ${element.hitted1?"hasHitted":null}">${element.name}</span>
+                        <input class="form-check-input hitted float-right position-relative" type="checkbox" ${element.hitted1?"checked":null}>
+                    </th>
+                </tr>
             `);
             
             $(`#${element.boss2} tr:last`).after(`        
