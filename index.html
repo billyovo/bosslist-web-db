@@ -83,43 +83,99 @@
         border-collapse: separate;
         border-spacing: 5px;
     }
+
+    .playerRecord > .hasHitted{
+        text-decoration: line-through;
+    }
 </style>
 
 <script>
-    $(document).ready(function () {  //prevent more than 3 bosses
-        $(".bossSelector").click(()=>{
+    
+    $(document).ready(()=>{  
+        var players;
+
+        fetch('https://billy-gay-bot.herokuapp.com/players', {     //GET data.
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          players = data;
+        })
+        .catch((error) => {
+          alert(error.message);
+        })
+        .finally(()=>{
+            players.forEach(element => {            //write data to website
+            $(`#${element.boss1} tr:last`).after(`      
+                <th class="playerRecord ml-1">
+                    <img src="${element.avatar}" height="50" width="50" class="float-left">
+                    <span class="float-left playerName ${element.hitted1?"hasHitted":null}">${element.name}</span>
+                    <input class="form-check-input hitted float-right position-relative" type="checkbox" ${element.hitted1?"checked":null}>
+                </th>
+            `);
+            
+            $(`#${element.boss2} tr:last`).after(`        
+                <tr class="ml-1">
+                    <th class="playerRecord">
+                        <img src="${element.avatar}" height="50" width="50" class="float-left">
+                        <span class="float-left playerName ${element.hitted2?"hasHitted":null}">${element.name}</span>
+                        <input class="form-check-input hitted float-right position-relative" type="checkbox" ${element.hitted2?"checked":null}>
+                    </th>
+                </tr>
+            `);
+        });
+        })
+       
+        $(".bossSelector").click(()=>{ //prevent more than 3 bosses
             if ($(".bossSelector:checked").length > 2){
                  return false;
             }
         });
-
         $('#addModal').on('hidden.bs.modal', ()=>{ //reset form on hide
             $(".bossSelector").prop("checked",false);
             $("#inputName, #avatarLink, #avatarFile").val("");
         })
 
-        $('.hitted').click(()=>{
-            alert($(this).tagName);
-        })
-
         $('#add').click(()=>{
-            fetch('https://billy-gay-bot.herokuapp.com/players', {
-              method: 'POST', // or 'PUT'
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({"abc":"abc"}),
-            })
-            .then(response => response.json())
-            .then(data => {
-              console.log('Success:', data);
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
+   //         fetch('https://billy-gay-bot.herokuapp.com/players', {
+   //           method: 'POST', 
+   //           headers: {
+   //             'Content-Type': 'application/json',
+   //           },
+   //           body: JSON.stringify({"abc":"abc"}),
+   //         })
+   //         .then(response => response.json())
+   //         .then(data => {
+   //           console.log('Success:', data);
+   //         })
+   //         .catch((error) => {
+   //           console.error('Error:', error);
+   //         });
         })
 
     });
+
+    $(document).on("click",".hitted",function(){
+        $(this).siblings(".playerName").toggleClass("hasHitted");
+        let player = $(this).siblings(".playerName").html();
+        let boss = $(this).closest("table").attr("id");
+        fetch('https://billy-gay-bot.herokuapp.com/players', {
+          method: 'PATCH', 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({"name": player, "boss": boss}),
+        })
+        .then(response => response.text())
+        .then(data=>console.log(data))
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+        });
 </script>
 
 <body>
@@ -144,9 +200,6 @@
                     <tr class="header">
                         <th style="background-color: rgb(204, 253, 255)">A</th>
                     </tr>
-                    <tr>
-                        <th>test</th>
-                    </tr>
                 </table>
             </div>
 
@@ -154,9 +207,6 @@
                 <table class="table table-borderless" id="B">
                     <tr class="header">
                         <th style="background-color: rgb(50, 179, 108)">B</th>
-                    </tr>
-                    <tr>
-                        <th>test</th>
                     </tr>
                 </table>
             </div>
@@ -166,9 +216,6 @@
                     <tr class="header">
                         <th style="background-color: rgb(130, 29, 130)">C</th>
                     </tr>
-                    <tr>
-                        <th>test</th>
-                    </tr>
                 </table>
             </div>
 
@@ -176,13 +223,6 @@
                 <table class="table table-borderless" id="D">
                     <tr class="header">
                         <th style="background-color: blue;">D</th>
-                    </tr>
-                    <tr>
-                        <th class="playerRecord ml-1">
-                            <img src="https://www.w3schools.com/w3css/img_lights.jpg" height="45" width="45" class="float-left">
-                            <span class="float-left">test</span>
-                            <input class="form-check-input hitted float-right position-relative" type="checkbox" >
-                        </th>
                     </tr>
                 </table>
             </div>
@@ -192,20 +232,6 @@
                     <tr class="header">
                         <th style="background-color: lightgreen;">E</th>
                     </tr>
-                    <tr>
-                        <th class="playerRecord ml-1">
-                            <img src="https://www.w3schools.com/w3css/img_lights.jpg" height="45" width="45" class="float-left">
-                            <span class="float-left">test</span>
-                            <input class="form-check-input hitted float-right position-relative" type="checkbox" >
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="playerRecord ml-1">
-                            <img src="https://www.w3schools.com/w3css/img_lights.jpg" height="45" width="45" class="float-left">
-                            <span class="float-left">test</span>
-                            <input class="form-check-input hitted float-right position-relative" type="checkbox" >
-                        </th>
-                    </tr>
                 </table>
             </div>
 
@@ -214,9 +240,6 @@
                     <tr class="header">
                         <th style="background-color: rgb(38, 179, 222);">F</th>
                     </tr>
-                    <tr>
-                        <th>test</th>
-                    </tr>
                 </table>
             </div>
 
@@ -224,9 +247,6 @@
                 <table class="table table-borderless" id="G">
                     <tr class="header">
                         <th style="background-color: rgb(240, 229, 26)">G</th>
-                    </tr>
-                    <tr>
-                        <th>test</th>
                     </tr>
                 </table>
             </div>
