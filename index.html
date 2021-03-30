@@ -43,6 +43,7 @@
 
     .sideFunctions{
         font-size: 30px;
+        width: 80px;
     }
 
     .playerRecord > img{
@@ -114,7 +115,7 @@
             $(`#${element.boss1} tr:last`).after(` 
                 <tr class="ml-1">
                     <th class="playerRecord">
-                        <img src="${element.avatar}" height="50" width="50" class="float-left">
+                        <img src="${element.avatar??'assets/avatar.jpg'}" height="50" width="50" class="float-left">
                         <span class="float-left playerName ${element.hitted1?"hasHitted":null}">${element.name}</span>
                         <input class="form-check-input hitted float-right position-relative" type="checkbox" ${element.hitted1?"checked":null}>
                     </th>
@@ -124,7 +125,7 @@
             $(`#${element.boss2} tr:last`).after(`        
                 <tr class="ml-1">
                     <th class="playerRecord">
-                        <img src="${element.avatar}" height="50" width="50" class="float-left">
+                        <img src="${element.avatar??'assets/avatar.jpg'}" height="50" width="50" class="float-left">
                         <span class="float-left playerName ${element.hitted2?"hasHitted":null}">${element.name}</span>
                         <input class="form-check-input hitted float-right position-relative" type="checkbox" ${element.hitted2?"checked":null}>
                     </th>
