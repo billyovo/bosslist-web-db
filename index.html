@@ -89,11 +89,24 @@
     .hitted, .header{
         cursor: pointer;
     }
+
+    .error{
+        color: red;
+        display: none;
+    }
+
+    .errorBlock{
+        outline: 1px red solid;
+    }
     
 </style>
 
 <script>
-    
+    function imageError(image) {
+        image.onerror = "";
+        image.src = "assets/avatar.jpg";
+        return true;
+    }
     $(document).ready(()=>{  
         var players;
         fetch(ENDPOINT+'/players', {     //GET data.
@@ -112,10 +125,11 @@
         })
         .finally(()=>{
             players.forEach(element => {            //write data to website
+            element.avatar = element.avatar==="null"?null:element.avatar;
             $(`#${element.boss1} tr:last`).after(` 
                 <tr class="ml-1">
                     <th class="playerRecord">
-                        <img src="${element.avatar??'assets/avatar.jpg'}" height="50" width="50" class="float-left">
+                        <img src="${element.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
                         <span class="float-left playerName ${element.hitted1?"hasHitted":null}">${element.name}</span>
                         <input class="form-check-input hitted float-right position-relative" type="checkbox" ${element.hitted1?"checked":null}>
                     </th>
@@ -125,7 +139,7 @@
             $(`#${element.boss2} tr:last`).after(`        
                 <tr class="ml-1">
                     <th class="playerRecord">
-                        <img src="${element.avatar??'assets/avatar.jpg'}" height="50" width="50" class="float-left">
+                        <img src="${element.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
                         <span class="float-left playerName ${element.hitted2?"hasHitted":null}">${element.name}</span>
                         <input class="form-check-input hitted float-right position-relative" type="checkbox" ${element.hitted2?"checked":null}>
                     </th>
@@ -181,24 +195,108 @@
         $('#addModal').on('hidden.bs.modal', ()=>{ //reset form on hide
             $(".bossSelector").prop("checked",false);
             $("#inputName, #avatarLink, #avatarFile").val("");
+            $('#inputName, .bossSelector, #avatarFile').removeClass('errorBlock');
+            $('#playerNameError, #bossError, #avatarFileError').css('display','none');
         })
 
         $('#add').click(()=>{
-   //         fetch('https://billy-gay-bot.herokuapp.com/players', {
-   //           method: 'POST', 
-   //           headers: {
-   //             'Content-Type': 'application/json',
-   //           },
-   //           body: JSON.stringify({"abc":"abc"}),
-   //         })
-   //         .then(response => response.json())
-   //         .then(data => {
-   //           console.log('Success:', data);
-   //         })
-   //         .catch((error) => {
-   //           console.error('Error:', error);
-   //         });
+            let isValid = true;
+            $('#inputName, .bossSelector, #avatarFile').removeClass('errorBlock');
+            $('#playerNameError, #bossError, #avatarFileError').css('display','none');
+
+            if(!$('#inputName').val().trim()){      //validate name
+                $('#inputName').addClass('errorBlock');
+                $('#playerNameError').css('display','block');
+                isValid = false;
+            };
+
+            if($(".bossSelector:checked").length !== 2){ //validate boss
+                $(".bossSelector").addClass('errorBlock');
+                $('#bossError').css('display','block');
+                isValid = false;
+            }
+
+            let file = $("#avatarFile").prop('files')[0];   //validate and get image file
+            let playerAvatar = $("#avatarLink").val() ? $("#avatarLink").val() : null;
+            if(file && !playerAvatar){
+                if(!file.type.indexOf('image/')!==-1){
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function(e) {
+                        playerAvatar = reader.result;
+                    };
+                }
+                else{
+                    $('#avatarFileError').css('display','block');
+                    $('#avatarFile').addClass('errorBlock');
+                    isValid = false;
+                }
+            }
+            if(!isValid){
+                return false;
+            }
+
+            let result = [];
+            $(".bossSelector:checked").each(function(){ //result
+                result.push($(this).val());
+            })
+
+            let newPlayer = {
+                name: $('#inputName').val().trim(),
+                id: null,
+                avatar: playerAvatar,
+                boss01: result[0],
+                boss02: result[1],
+            }
+
+            $("#add").prop('disabled',true);
+            $("#addButtonText").addClass("spinner-border spinner-border-sm");
+            $("#addButtonText").text("");
+
+            fetch(ENDPOINT+'/players', {
+              method: 'POST', 
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newPlayer),
+            })
+            .then(response => response.text())
+            .then(data=>{
+                console.log(data);
+                $(`#${newPlayer.boss01} tr:last`).after(` 
+                    <tr class="ml-1">
+                        <th class="playerRecord">
+                            <img src="${newPlayer.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
+                            <span class="float-left playerName">${newPlayer.name}</span>
+                            <input class="form-check-input hitted float-right position-relative" type="checkbox">
+                        </th>
+                    </tr>
+                `);
+            
+                $(`#${newPlayer.boss02} tr:last`).after(`        
+                    <tr class="ml-1">
+                        <th class="playerRecord">
+                            <img src="${newPlayer.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
+                            <span class="float-left playerName>${newPlayer.name}</span>
+                            <input class="form-check-input hitted float-right position-relative" type="checkbox">
+                        </th>
+                    </tr>
+                `);
+                $(".bossSelector").prop("checked",false);
+                $("#inputName, #avatarLink, #avatarFile").val("");
+                $('#inputName, .bossSelector, #avatarFile').removeClass('errorBlock');
+                $('#playerNameError, #bossError, #avatarFileError').css('display','none');
+            })
+            .catch((error) => {
+                alert(error.message);
+            })
+            .finally(()=>{
+                $("#add").prop('disabled',false);
+                $("#addButtonText").removeClass("spinner-border spinner-border-sm");
+                $("#addButtonText").text("Add");
+            })
         })
+
         $(".header").click(function(){
             let result = [];
             $(this).siblings().each(function () {
@@ -248,7 +346,7 @@
         <ul class="navbar-nav">
             <li class="nav-item px-2">
                 <div class="btn-group" id="functionSelector" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-secondary sideFunctions" id="add" data-toggle="modal" data-target="#addModal"><i class="far fa-plus-square"></i></button>
+                    <button type="button" class="btn btn-secondary sideFunctions" id="addPlayer" data-toggle="modal" data-target="#addModal"><i class="far fa-plus-square"></i></button>
                     <button type="button" class="btn btn-secondary sideFunctions" id="delete"><i class="fas fa-trash-alt"></i></button>
                 </div>
             </li>
@@ -329,11 +427,13 @@
                 <div class="form-group">
                     <label for="newPlayers">Name:</label>
                     <input type="text" class="form-control" id="inputName" aria-describedby="addNewPlayers" placeholder="Gay legs">
+                    <span class="error" id="playerNameError">Enter a valid player name!</span>
                 </div>
                 <div class="form-group">
                     <label for="newPlayers">Avatar File/Link (Optional)</label>
                     <input type="URL" class="form-control" id="avatarLink" placeholder="Link here">
                     <input type="file" class="form-control" id="avatarFile" accept="image/*">
+                    <span class="error" id="avatarFileError">Not a valid image file!</span>
                 </div>
                 <span>Bosses:</span>
                 <div class="form-check">
@@ -364,10 +464,11 @@
                     <input class="form-check-input bossSelector" type="checkbox" value="G">
                     <label class="form-check-label bossSelectorLabel" for="bosses">G</label>
                 </div>
+                <span class="error" id="bossError">Select 2 bosses!</span>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary bg-success" id="add" data-dismiss="modal">Add</button> 
+                <button type="button" class="btn btn-secondary bg-success" id="add"><span id="addButtonText">add</span></button> 
                 <button type="button" class="btn btn-secondary bg-danger" data-dismiss="modal">Close</button>
             </div>
             
