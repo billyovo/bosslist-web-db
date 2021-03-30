@@ -98,6 +98,15 @@
     .errorBlock{
         outline: 1px red solid;
     }
+
+    .dataClose{
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    #addSuccessText{
+        visibility: hidden;
+    }
     
 </style>
 
@@ -196,13 +205,15 @@
             $(".bossSelector").prop("checked",false);
             $("#inputName, #avatarLink, #avatarFile").val("");
             $('#inputName, .bossSelector, #avatarFile').removeClass('errorBlock');
-            $('#playerNameError, #bossError, #avatarFileError').css('display','none');
+            $('#playerNameError, #bossError, #avatarFileError, #addSuccessText').css('display','none');
+            $('#addSuccessText').css('visibility','visible');
         })
 
         $('#add').click(()=>{
             let isValid = true;
             $('#inputName, .bossSelector, #avatarFile').removeClass('errorBlock');
             $('#playerNameError, #bossError, #avatarFileError').css('display','none');
+            $('#addSuccessText').css('visibility','hidden');
 
             if(!$('#inputName').val().trim()){      //validate name
                 $('#inputName').addClass('errorBlock');
@@ -222,7 +233,7 @@
                 if(!file.type.indexOf('image/')!==-1){
                     const reader = new FileReader();
                     reader.readAsDataURL(file);
-                    reader.onload = function(e) {
+                    reader.onload = function() {
                         playerAvatar = reader.result;
                     };
                 }
@@ -277,7 +288,7 @@
                     <tr class="ml-1">
                         <th class="playerRecord">
                             <img src="${newPlayer.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
-                            <span class="float-left playerName>${newPlayer.name}</span>
+                            <span class="float-left playerName">${newPlayer.name}</span>
                             <input class="form-check-input hitted float-right position-relative" type="checkbox">
                         </th>
                     </tr>
@@ -286,6 +297,7 @@
                 $("#inputName, #avatarLink, #avatarFile").val("");
                 $('#inputName, .bossSelector, #avatarFile').removeClass('errorBlock');
                 $('#playerNameError, #bossError, #avatarFileError').css('display','none');
+                $('#addSuccessText').css('visibility','visible');
             })
             .catch((error) => {
                 alert(error.message);
@@ -467,9 +479,12 @@
                 <span class="error" id="bossError">Select 2 bosses!</span>
             </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary bg-success" id="add"><span id="addButtonText">add</span></button> 
-                <button type="button" class="btn btn-secondary bg-danger" data-dismiss="modal">Close</button>
+            <div class="modal-footer justify-content-between">
+                <span class="text-success" id="addSuccessText">Success!</span>
+                <div>
+                    <button type="button" class="btn btn-secondary bg-success" id="add"><span id="addButtonText">add</span></button> 
+                    <button type="button" class="btn btn-secondary bg-danger" data-dismiss="modal">Close</button>
+                </div>
             </div>
             
           </div>
