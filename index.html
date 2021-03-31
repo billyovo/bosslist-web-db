@@ -387,9 +387,6 @@
                 $(this).remove();
             }
         })
-        $('#removeIcon').addClass('fa-trash-alt');
-        enabledDelete = false;
-        $('.playerRecord').css('box-shadow', 'none');
 
         fetch(ENDPOINT+'/delete-players', {
           method: 'POST', 
