@@ -225,16 +225,24 @@
         });
         $('#addModal').on('hidden.bs.modal', ()=>{ //reset form on hide
             $(".bossSelector").prop("checked",false);
-            $("#inputName, #avatarLink, #avatarFile").val("");
-            $('#inputName, .bossSelector, #avatarFile').removeClass('errorBlock');
-            $('#playerNameError, #bossError, #avatarFileError').css('display','none');
+            $("#inputName, #avatarLink").val("");
+            $('#inputName, .bossSelector').removeClass('errorBlock');
+            $('#playerNameError, #bossError').css('display','none');
             $('#addSuccessText').css('visibility','hidden');
+        })
+
+        $('#addModal').click(()=>{
+            if(enabledDelete){
+                enabledDelete = false;
+                $('#removeIcon').addClass('fa-trash-alt');
+                $('.playerRecord').css('box-shadow', 'none');
+            }
         })
 
         $('#add').click(()=>{
             let isValid = true;
-            $('#inputName, .bossSelector, #avatarFile').removeClass('errorBlock');
-            $('#playerNameError, #bossError, #avatarFileError').css('display','none');
+            $('#inputName, .bossSelector').removeClass('errorBlock');
+            $('#playerNameError, #bossError').css('display','none');
             $('#addSuccessText').css('visibility','hidden');
 
             if(!$('#inputName').val().trim()){      //validate name
@@ -249,23 +257,6 @@
                 isValid = false;
             }
 
-            let file = $("#avatarFile").prop('files')[0];   //validate and get image file
-            let playerAvatar = $("#avatarLink").val() ? $("#avatarLink").val() : null;
-            
-            if(file && !playerAvatar){
-                if(!file.type.indexOf('image/')!==-1){
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = function() {
-                        playerAvatar = reader.result;
-                    };
-                }
-                else{
-                    $('#avatarFileError').css('display','block');
-                    $('#avatarFile').addClass('errorBlock');
-                    isValid = false;
-                }
-            }
             if(!isValid){
                 return false;
             }
@@ -316,9 +307,9 @@
                 $(`#${newPlayer.boss02} tr:last`).after(newRecord);
                 
                 $(".bossSelector").prop("checked",false);
-                $("#inputName, #avatarLink, #avatarFile").val("");
-                $('#inputName, .bossSelector, #avatarFile').removeClass('errorBlock');
-                $('#playerNameError, #bossError, #avatarFileError').css('display','none');
+                $("#inputName, #avatarLink").val("");
+                $('#inputName, .bossSelector').removeClass('errorBlock');
+                $('#playerNameError, #bossError').css('display','none');
                 $('#addSuccessText').css('visibility','visible');
             })
             .catch((error) => {
@@ -370,7 +361,14 @@
           },
           body: JSON.stringify({"name": player, "boss": boss}),
         })
-        .then(response => response.text())
+        .then(response =>{ 
+            if(response.status === 409){
+                throw new Error(player +'並不存在!');
+            }
+            else{
+                response.text()
+            }
+        })
         .then(data=>console.log(data))
         .catch((error) => {
           alert(error.message);
@@ -382,7 +380,7 @@
         $('.recordCard').css('cursor', 'default');
         let toBeDeleted = $(this).find('span').text();
 
-        $('.playerRecord').each(function(){
+        $('.recordCard').each(function(){
             if($(this).find('span').text()===toBeDeleted){
                 $(this).remove();
             }
@@ -527,10 +525,9 @@
                     <span class="error" id="playerNameError">Enter a valid player name!</span>
                 </div>
                 <div class="form-group">
-                    <label for="newPlayers">Avatar File/Link (Optional)</label>
+                    <label for="newPlayers">Avatar Link (Optional)</label>
                     <input type="URL" class="form-control" id="avatarLink" placeholder="Link here">
-                    <input type="file" class="form-control" id="avatarFile" accept="image/*">
-                    <span class="error" id="avatarFileError">Not a valid image file!</span>
+
                 </div>
                 <span>Bosses:</span>
                 <div class="form-check">
