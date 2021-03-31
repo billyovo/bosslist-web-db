@@ -107,6 +107,9 @@
     #addSuccessText{
         visibility: hidden;
     }
+    .placeholder{
+        display: none;
+    }
     
 </style>
 
@@ -134,27 +137,35 @@
         })
         .finally(()=>{
             players.forEach(element => {            //write data to website
-            element.avatar = element.avatar==="null"?null:element.avatar;
-            $(`#${element.boss1} tr:last`).after(` 
-                <tr class="ml-1">
-                    <th class="playerRecord">
-                        <img src="${element.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
-                        <span class="float-left playerName ${element.hitted1?"hasHitted":null}">${element.name}</span>
-                        <input class="form-check-input hitted float-right position-relative" type="checkbox" ${element.hitted1?"checked":null}>
-                    </th>
-                </tr>
-            `);
-            
-            $(`#${element.boss2} tr:last`).after(`        
-                <tr class="ml-1">
-                    <th class="playerRecord">
-                        <img src="${element.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
-                        <span class="float-left playerName ${element.hitted2?"hasHitted":null}">${element.name}</span>
-                        <input class="form-check-input hitted float-right position-relative" type="checkbox" ${element.hitted2?"checked":null}>
-                    </th>
-                </tr>
-            `);
-        });
+                element.avatar = element.avatar==="null"?null:element.avatar;
+                const recordHitted = `<tr class="ml-1">
+                                        <th class="playerRecord">
+                                            <img src="${element.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
+                                            <span class="float-left playerName hasHitted">${element.name}</span>
+                                            <input class="form-check-input hitted float-right position-relative" type="checkbox" checked>
+                                        </th>
+                                    </tr>`;
+                const recordNotHitted = `<tr class="ml-1">
+                                            <th class="playerRecord">
+                                                <img src="${element.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
+                                                <span class="float-left playerName">${element.name}</span>
+                                                <input class="form-check-input hitted float-right position-relative" type="checkbox">
+                                            </th>
+                                        </tr>`;
+                if(element.hitted1){
+                    $(`#${element.boss1} .placeholder:last`).after(recordHitted);
+                }
+                else{
+                    $(`#${element.boss1} .placeholder:last`).before(recordNotHitted);
+                }
+
+                if(element.hitted2){
+                    $(`#${element.boss2} .placeholder:last`).after(recordHitted);
+                }
+                else{
+                    $(`#${element.boss2} .placeholder:last`).before(recordNotHitted);
+                }
+            });
         $(".loadingScreen").remove();
         })
 
@@ -274,7 +285,7 @@
             .then(response => response.text())
             .then(data=>{
                 console.log(data);
-                $(`#${newPlayer.boss01} tr:last`).after(` 
+                const newRecord = `        
                     <tr class="ml-1">
                         <th class="playerRecord">
                             <img src="${newPlayer.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
@@ -282,17 +293,10 @@
                             <input class="form-check-input hitted float-right position-relative" type="checkbox">
                         </th>
                     </tr>
-                `);
-            
-                $(`#${newPlayer.boss02} tr:last`).after(`        
-                    <tr class="ml-1">
-                        <th class="playerRecord">
-                            <img src="${newPlayer.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
-                            <span class="float-left playerName">${newPlayer.name}</span>
-                            <input class="form-check-input hitted float-right position-relative" type="checkbox">
-                        </th>
-                    </tr>
-                `);
+                `;
+                $(`#${newPlayer.boss01} .placeholder:last`).after(newRecord);
+                $(`#${newPlayer.boss02} .placeholder:last`).after(newRecord);
+                
                 $(".bossSelector").prop("checked",false);
                 $("#inputName, #avatarLink, #avatarFile").val("");
                 $('#inputName, .bossSelector, #avatarFile').removeClass('errorBlock');
@@ -372,6 +376,9 @@
                     <tr class="header">
                         <th style="background-color: rgb(204, 253, 255)"><span class="headerText">A</span></th>
                     </tr>
+                    <tr class="placeholder">
+                        <th></th>
+                    </tr>
                 </table>
             </div>
 
@@ -379,6 +386,9 @@
                 <table class="table table-borderless" id="B">
                     <tr class="header">
                         <th style="background-color: rgb(50, 179, 108)"><span class="headerText">B</span></th>
+                    </tr>
+                    <tr class="placeholder">
+                        <th></th>
                     </tr>
                 </table>
             </div>
@@ -388,6 +398,9 @@
                     <tr class="header">
                         <th style="background-color: rgb(130, 29, 130)"><span class="headerText">C</span></th>
                     </tr>
+                    <tr class="placeholder">
+                        <th></th>
+                    </tr>
                 </table>
             </div>
 
@@ -395,6 +408,9 @@
                 <table class="table table-borderless" id="D">
                     <tr class="header">
                         <th style="background-color: blue;"><span class="headerText">D</span></th>
+                    </tr>
+                    <tr class="placeholder">
+                        <th></th>
                     </tr>
                 </table>
             </div>
@@ -404,6 +420,9 @@
                     <tr class="header">
                         <th style="background-color: lightgreen;"><span class="headerText">E</span></th>
                     </tr>
+                    <tr class="placeholder">
+                        <th></th>
+                    </tr>
                 </table>
             </div>
 
@@ -412,6 +431,9 @@
                     <tr class="header">
                         <th style="background-color: rgb(38, 179, 222);"><span class="headerText">F</span></th>
                     </tr>
+                    <tr class="placeholder">
+                        <th></th>
+                    </tr>
                 </table>
             </div>
 
@@ -419,6 +441,9 @@
                 <table class="table table-borderless" id="G">
                     <tr class="header">
                         <th style="background-color: rgb(240, 229, 26)"><span class="headerText">G</span></th>
+                    </tr>
+                    <tr class="placeholder">
+                        <th></th>
                     </tr>
                 </table>
             </div>
