@@ -117,9 +117,13 @@
         top: 0;
         right: 0;
     }
+    .sideFunctions{
+        width: 50px;
+    }
 </style>
 
 <script>
+    let enabledDelete = false;
 
     function imageError(image) {
         image.onerror = "";
@@ -338,6 +342,14 @@
             });
             navigator.clipboard.writeText(result.map(element=>'@'+element).join(' ')+`, ${boss_hour}:30有空打 :${$(this).find('span').text()}boss: 嗎~?`);
         })
+
+        $("#delete").click(function(){
+            enabledDelete = true;
+            $('.recordCard').css('cursor', 'no-drop');
+            $('#removeIcon').toggleClass('fa-trash-alt');
+            $('.playerRecord').css('box-shadow', '0px 0px 3px 3px rgb(255,0,0)');
+        })
+
     });
   
     $(document).on("click",".hitted",function(){
@@ -357,6 +369,34 @@
           alert(error.message);
         });
     });
+
+    $(document).on("click",".playerRecord",function(){
+        if(!enabledDelete){return;}
+        $('.recordCard').css('cursor', 'default');
+        let toBeDeleted = $(this).find('span').text();
+
+        $('.playerRecord').each(function(){
+            if($(this).find('span').text()===toBeDeleted){
+                $(this).remove();
+            }
+        })
+        $('#removeIcon').toggleClass('fa-trash-alt');
+        enabledDelete = false;
+        $('.playerRecord').css('box-shadow', 'none');
+
+        fetch(ENDPOINT+'/delete-players', {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({"name": toBeDeleted}),
+        })
+        .then(response => response.text())
+        .then(data=>console.log(data))
+        .catch((error) => {
+          alert(error.message);
+        });
+    })
 
 
 </script>
@@ -379,7 +419,7 @@
             <li class="nav-item px-2">
                 <div class="btn-group btn-group-lg" id="functionSelector" role="group">
                     <button type="button" class="btn btn-secondary sideFunctions" id="addPlayer" data-toggle="modal" data-target="#addModal"><span><i class="far fa-plus-square"></i></span></button>
-                    <button type="button" class="btn btn-secondary sideFunctions" id="delete"><span><i class="fas fa-trash-alt"></i></span></button>
+                    <button type="button" class="btn btn-secondary sideFunctions" id="delete"><span><i class="fas fa-trash-alt" id="removeIcon"></i></span></button>
                 </div>
             </li>
         </ul>
