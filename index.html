@@ -272,7 +272,7 @@
                 result.push($(this).val());
             })
 
-            let playerAvatar = $('#inputName').val() ?? null;
+            let playerAvatar = $('#inputName').val()? $('#inputName').val():null;
 
             let newPlayer = {
                 name: $('#inputName').val().trim(),
@@ -305,7 +305,7 @@
                 const newRecord = `        
                     <tr class="ml-1 recordCard">
                         <th class="playerRecord">
-                            <img src="${newPlayer.avatar??'assets/avatar.png'}" onerror="imgError(this);" height="50" width="50" class="float-left">
+                            <img src="${newPlayer.avatar??'assets/avatar.png'}" onerror="imageError(this);" height="50" width="50" class="float-left">
                             <span class="float-left playerName">${newPlayer.name}</span>
                             <input class="form-check-input hitted float-right position-relative" type="checkbox">
                         </th>
