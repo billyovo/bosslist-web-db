@@ -41,10 +41,7 @@
         max-width: 100px;
     }
 
-    .sideFunctions{
-        font-size: 30px;
-        width: 80px;
-    }
+
 
     .playerRecord > img{
         margin-right: 1.5rem;
@@ -110,6 +107,12 @@
     .placeholder{
         display: none;
     }
+
+    .playerName {
+         width: 9rem;
+    }
+
+    
     
 </style>
 
@@ -141,15 +144,15 @@
                 const recordHitted = `<tr class="ml-1">
                                         <th class="playerRecord">
                                             <img src="${element.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
-                                            <span class="float-left playerName hasHitted">${element.name}</span>
-                                            <input class="form-check-input hitted float-right position-relative" type="checkbox" checked>
+                                            <span class="float-left playerName hasHitted clearfix">${element.name}</span>
+                                            <input class="form-check-input hitted float-right clearfix" type="checkbox" checked>
                                         </th>
                                     </tr>`;
                 const recordNotHitted = `<tr class="ml-1">
                                             <th class="playerRecord">
                                                 <img src="${element.avatar??'assets/avatar.jpg'}" onerror="imgError(this);" height="50" width="50" class="float-left">
-                                                <span class="float-left playerName">${element.name}</span>
-                                                <input class="form-check-input hitted float-right position-relative" type="checkbox">
+                                                <span class="float-left playerName clearfix">${element.name}</span>
+                                                <input class="form-check-input hitted float-right position-relative clearfix" type="checkbox">
                                             </th>
                                         </tr>`;
                 if(element.hitted1){
@@ -240,6 +243,7 @@
 
             let file = $("#avatarFile").prop('files')[0];   //validate and get image file
             let playerAvatar = $("#avatarLink").val() ? $("#avatarLink").val() : null;
+            
             if(file && !playerAvatar){
                 if(!file.type.indexOf('image/')!==-1){
                     const reader = new FileReader();
@@ -361,9 +365,9 @@
 
         <ul class="navbar-nav">
             <li class="nav-item px-2">
-                <div class="btn-group" id="functionSelector" role="group">
-                    <button type="button" class="btn btn-secondary sideFunctions" id="addPlayer" data-toggle="modal" data-target="#addModal"><i class="far fa-plus-square"></i></button>
-                    <button type="button" class="btn btn-secondary sideFunctions" id="delete"><i class="fas fa-trash-alt"></i></button>
+                <div class="btn-group btn-group-lg" id="functionSelector" role="group">
+                    <button type="button" class="btn btn-secondary sideFunctions" id="addPlayer" data-toggle="modal" data-target="#addModal"><span><i class="far fa-plus-square"></i></span></button>
+                    <button type="button" class="btn btn-secondary sideFunctions" id="delete"><span><i class="fas fa-trash-alt"></i></span></button>
                 </div>
             </li>
         </ul>
