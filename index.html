@@ -157,14 +157,14 @@
                 element.avatar = element.avatar==="null"?null:element.avatar;
                 const recordHitted = `<tr class="ml-1 recordCard">
                                         <th class="playerRecord">
-                                            <img src="${element.avatar??'assets/avatar.png'}" onerror="imgError(this);" height="50" width="50" class="float-left">
+                                            <img src="${element.avatar??'assets/avatar.png'}" onerror="imageError(this);" height="50" width="50" class="float-left">
                                             <span class="float-left playerName hasHitted clearfix">${element.name}</span>
                                             <input class="form-check-input hitted float-right clearfix position-relative" type="checkbox" checked>
                                         </th>
                                     </tr>`;
                 const recordNotHitted = `<tr class="ml-1 recordCard">
                                             <th class="playerRecord">
-                                                <img src="${element.avatar??'assets/avatar.png'}" onerror="imgError(this);" height="50" width="50" class="float-left">
+                                                <img src="${element.avatar??'assets/avatar.png'}" onerror="imageError(this);" height="50" width="50" class="float-left">
                                                 <span class="float-left playerName clearfix">${element.name}</span>
                                                 <input class="form-check-input hitted float-right position-relative clearfix" type="checkbox">
                                             </th>
@@ -271,6 +271,8 @@
             $(".bossSelector:checked").each(function(){ //result
                 result.push($(this).val());
             })
+
+            let playerAvatar = $('#inputName').val() ?? null;
 
             let newPlayer = {
                 name: $('#inputName').val().trim(),
