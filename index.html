@@ -311,8 +311,8 @@
                         </th>
                     </tr>
                 `;
-                $(`#${newPlayer.boss01} tr:last`).after(newRecord);
-                $(`#${newPlayer.boss02} tr:last`).after(newRecord);
+                $(`#${newPlayer.boss01} .placeholder:last`).before(newRecord);
+                $(`#${newPlayer.boss02} .placeholder:last`).before(newRecord);
                 
                 $(".bossSelector").prop("checked",false);
                 $("#inputName, #avatarLink").val("");
