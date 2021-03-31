@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Boss Website</title>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -120,6 +121,9 @@
     .sideFunctions{
         width: 50px;
     }
+    .tooltip-inner{
+        font-size: 20px;
+    }
 </style>
 
 <script>
@@ -131,6 +135,8 @@
         return true;
     }
     $(document).ready(()=>{  
+        $('[data-toggle="tooltip"]').tooltip();   
+
         var players;
         fetch(ENDPOINT+'/players', {     //GET data.
           method: 'GET', 
@@ -332,6 +338,7 @@
                 }
             });
             navigator.clipboard.writeText(result.map(element=>'@'+element).join(' ')+`, ${boss_hour}:30有空打 :${$(this).find('span').text()}boss: 嗎~?`);
+            $(this).attr("title", "Copied!").tooltip("_fixTitle").tooltip("show").attr("title", "Copy").tooltip("_fixTitle");
         })
 
         $("#delete").click(function(){
@@ -431,7 +438,7 @@
         <div class="row no-gutters text-center">   
             <div class="col">                                    
                 <table class="table table-borderless" id="A">
-                    <tr class="header ml-1">
+                    <tr class="header ml-1" data-toggle="tooltip" data-placement="top" title="Copy">
                         <th style="background-color: rgb(204, 253, 255)"><span class="headerText">A</span></th>
                     </tr>
                     <tr class="placeholder">
@@ -442,7 +449,7 @@
 
             <div class="col">                                    
                 <table class="table table-borderless" id="B">
-                    <tr class="header ml-1">
+                    <tr class="header ml-1" data-toggle="tooltip" data-placement="top" title="Copy">
                         <th style="background-color: rgb(50, 179, 108)"><span class="headerText">B</span></th>
                     </tr>
                     <tr class="placeholder">
@@ -453,7 +460,7 @@
 
             <div class="col">                                    
                 <table class="table table-borderless" id="C">
-                    <tr class="header ml-1">
+                    <tr class="header ml-1" data-toggle="tooltip" data-placement="top" title="Copy">
                         <th style="background-color: rgb(130, 29, 130)"><span class="headerText">C</span></th>
                     </tr>
                     <tr class="placeholder">
@@ -464,7 +471,7 @@
 
             <div class="col">                                    
                 <table class="table table-borderless" id="D">
-                    <tr class="header ml-1">
+                    <tr class="header ml-1" data-toggle="tooltip" data-placement="top" title="Copy">
                         <th style="background-color: blue;"><span class="headerText">D</span></th>
                     </tr>
                     <tr class="placeholder">
@@ -475,7 +482,7 @@
 
             <div class="col">                                    
                 <table class="table table-borderless" id="E">
-                    <tr class="header ml-1">
+                    <tr class="header ml-1" data-toggle="tooltip" data-placement="top" title="Copy">
                         <th style="background-color: lightgreen;"><span class="headerText">E</span></th>
                     </tr>
                     <tr class="placeholder">
@@ -486,7 +493,7 @@
 
             <div class="col">                                    
                 <table class="table table-borderless" id="F">
-                    <tr class="header ml-1">
+                    <tr class="header ml-1" data-toggle="tooltip" data-placement="top" title="Copy">
                         <th style="background-color: rgb(38, 179, 222);"><span class="headerText">F</span></th>
                     </tr>
                     <tr class="placeholder">
@@ -497,7 +504,7 @@
 
             <div class="col">                                    
                 <table class="table table-borderless" id="G">
-                    <tr class="header ml-1">
+                    <tr class="header ml-1" data-toggle="tooltip" data-placement="top" title="Copy">
                         <th style="background-color: rgb(240, 229, 26)"><span class="headerText">G</span></th>
                     </tr>
                     <tr class="placeholder">
