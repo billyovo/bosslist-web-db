@@ -346,7 +346,7 @@
         $("#delete").click(function(){
             enabledDelete = true;
             $('.recordCard').css('cursor', 'no-drop');
-            $('#removeIcon').toggleClass('fa-trash-alt');
+            $('#removeIcon').removeClass('fa-trash-alt');
             $('.playerRecord').css('box-shadow', '0px 0px 3px 3px rgb(255,0,0)');
         })
 
@@ -380,7 +380,7 @@
                 $(this).remove();
             }
         })
-        $('#removeIcon').toggleClass('fa-trash-alt');
+        $('#removeIcon').addClass('fa-trash-alt');
         enabledDelete = false;
         $('.playerRecord').css('box-shadow', 'none');
 
