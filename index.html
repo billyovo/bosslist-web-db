@@ -112,6 +112,11 @@
          width: 9rem;
     }
         
+    .deleteButton{
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 </style>
 
 <script>
@@ -324,15 +329,15 @@
 
         $(".header").click(function(){
             let result = [];
-            $(this).siblings().each(function () {
-                if($(this).find('span').css('text-decoration').indexOf('line-through')===-1){
-                    result.push($(this).find('span').text());
+            $(this).siblings().each(function (){
+                if(!$(this).hasClass('placeholder')){
+                    if($(this).find('span').css('text-decoration').indexOf('line-through')===-1){
+                        result.push($(this).find('span').text());
+                    }
                 }
             });
             navigator.clipboard.writeText(result.map(element=>'@'+element).join(' ')+`, ${boss_hour}:30有空打 :${$(this).find('span').text()}boss: 嗎~?`);
         })
-
-
     });
   
     $(document).on("click",".hitted",function(){
