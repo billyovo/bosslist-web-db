@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang='zh-Hant'>
 <head>
-  <title>Boss Website</title>
+  <title>Joker哥哥屋企個池塘</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
@@ -309,8 +309,8 @@
                         </th>
                     </tr>
                 `;
-                $(`#${newPlayer.boss01} tr:last`).after(newRecord);
-                $(`#${newPlayer.boss02} tr:last`).after(newRecord);
+                $(`#${newPlayer.boss01} .placeholder:last`).before(newRecord);
+                $(`#${newPlayer.boss02} .placeholder:last`).before(newRecord);
                 
                 $(".bossSelector").prop("checked",false);
                 $("#inputName, #avatarLink").val("");
@@ -383,7 +383,6 @@
 
     $(document).on("click",".playerRecord",function(){
         if(!enabledDelete){return;}
-        $('.recordCard').css('cursor', 'default');
         let toBeDeleted = $(this).find('span').text();
 
         $('.recordCard').each(function(){
@@ -415,10 +414,10 @@
                 <img src="assets/icon.webp" height="50" width="50" class="rounded-circle">
             </li>
             <li class="nav-item active px-2">
-              <a class="nav-link" href="#">Players</a>
+              <a class="nav-link" href="index.html">Players</a>
             </li>
             <li class="nav-item px-2">
-                <a class="nav-link" href="#">Timetable</a>
+                <a class="nav-link" href="timetable.html">Timetable</a>
             </li>
         </ul>
 
