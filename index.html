@@ -134,10 +134,8 @@
         image.src = "assets/avatar.webp";
         return true;
     }
-    $(document).ready(()=>{  
-        $('[data-toggle="tooltip"]').tooltip();   
 
-        var players;
+    var players;
         fetch(ENDPOINT+'/players', {     //GET data.
           method: 'GET', 
           headers: {
@@ -185,6 +183,9 @@
             });
         $(".loadingScreen").remove();
         })
+        
+    $(document).ready(()=>{  
+        $('[data-toggle="tooltip"]').tooltip();   
 
             const timetable = [["A","B","C","D"],["E","F","G","A"],["B","C","D","E"],["F","G","A","B"],["C","D","E","F"],["G","A","B","C"], ["D","E","F","G"]];
 
