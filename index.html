@@ -135,7 +135,6 @@
         return true;
     }
 
-    var players;
         fetch(ENDPOINT+'/players', {     //GET data.
           method: 'GET', 
           headers: {
@@ -143,15 +142,9 @@
           },
         })
         .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-          players = data;
-        })
-        .catch((error) => {
-          alert(error.message);
-        })
-        .finally(()=>{
-            players.forEach(element => {            //write data to website
+        .then(players => {
+          console.log('Success:', players);
+          players.forEach(element => {            //write data to website
                 element.avatar = element.avatar==="null"?null:element.avatar;
                 const recordHitted = `<tr class="ml-1 recordCard">
                                         <th class="playerRecord">
@@ -181,9 +174,14 @@
                     $(`#${element.boss2} .placeholder:last`).before(recordNotHitted);
                 }
             });
+        })
+        .catch((error) => {
+          alert(error.message);
+        })
+        .finally(()=>{
         $(".loadingScreen").remove();
         })
-        
+
     $(document).ready(()=>{  
         $('[data-toggle="tooltip"]').tooltip();   
 
@@ -407,7 +405,6 @@
           alert(error.message);
         });
     })
-
 
 </script>
 
