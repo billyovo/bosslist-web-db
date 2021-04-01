@@ -123,6 +123,15 @@
     .tooltip-inner{
         font-size: 20px;
     }
+
+    @media screen and (max-width: 768px) {
+        .navbar {
+            max-height: 70px;
+        }
+        .nav-link{
+            display: none;
+        }
+}
 </style>
 
 <script>
@@ -416,7 +425,7 @@
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between navbar-expand-md sticky-top">
         <ul class="navbar-nav">
-            <li class="nav-item active px-2">
+            <li class="nav-item active px-2 navIcon">
                 <img src="assets/icon.webp" height="50" width="50" class="rounded-circle">
             </li>
             <li class="nav-item active px-2">
