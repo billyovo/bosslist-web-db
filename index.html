@@ -338,8 +338,13 @@
                     }
                 }
             });
-            navigator.clipboard.writeText(result.map(element=>'@'+element).join(' ')+`, ${boss_hour}:30有空打 :${$(this).find('span').text()}boss: 嗎~?`);
-            $(this).attr("title", "Copied!").tooltip("_fixTitle").tooltip("show").attr("title", "Copy").tooltip("_fixTitle");
+            if(result.length!=0){
+                navigator.clipboard.writeText(result.map(element=>'@'+element).join(' ')+`, ${boss_hour}:30有空打 :${$(this).find('span').text()}boss: 嗎~?`);
+                $(this).attr("title", "Copied!").tooltip("_fixTitle").tooltip("show").attr("title", "Copy").tooltip("_fixTitle");
+            }
+            else{
+                $(this).attr("title", "Copied Nothing!").tooltip("_fixTitle").tooltip("show").attr("title", "Copy").tooltip("_fixTitle");
+            }
         })
 
         $("#delete").click(function(){
