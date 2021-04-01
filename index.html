@@ -126,10 +126,14 @@
 
     @media screen and (max-width: 768px) {
         .navbar {
-            max-height: 70px;
+            max-height: 80px;
         }
-        .nav-link{
+        #playerNav, .navIcon{
             display: none;
+        }
+        .sideFunctions{
+            width: 130px;
+            height: 50px;
         }
 }
 </style>
@@ -428,7 +432,7 @@
             <li class="nav-item active px-2 navIcon">
                 <img src="assets/icon.webp" height="50" width="50" class="rounded-circle">
             </li>
-            <li class="nav-item active px-2">
+            <li class="nav-item active px-2" id="playerNav">
               <a class="nav-link" href="index.html" tabindex="1">Players</a>
             </li>
             <li class="nav-item px-2">
