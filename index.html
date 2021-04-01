@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang='zh-Hant'>
 <head>
-  <title>點擊此處與猛男展開激情對話</title>
+  <title>Joker哥哥屋企個池塘</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
@@ -16,10 +16,9 @@
 
 <style>
     .header{
-        line-height: 80px;
-        min-height: 80px;
-        height: 80px;
-        font-size: 60px;
+        min-height: 35px;
+        height: 35px;
+        font-size: 35px;
         color: white;
     }
     body{
@@ -208,12 +207,12 @@
             }
         
             if(boss_hour===19){  //730
-                $(`#${timetable[day][0]}`).find(".headerText").css('border-radius','100%').css('padding','0px 30px').css('border', '5px dotted white');
-                $(`#${timetable[day][1]}`).find(".headerText").css('border-radius','100%').css('padding','0px 30px').css('border', '5px dotted white');
+                $(`#${timetable[day][0]}`).find(".headerText").css('border-radius','100%').css('padding','5px 20px').css('border', '5px dotted white');
+                $(`#${timetable[day][1]}`).find(".headerText").css('border-radius','100%').css('padding','5px 20px').css('border', '5px dotted white');
             }
             else{               //930
-                $(`#${timetable[day][2]}`).find(".headerText").css('border-radius','100%').css('padding','0px 30px').css('border', '5px dotted white');
-                $(`#${timetable[day][3]}`).find(".headerText").css('border-radius','100%').css('padding','0px 30px').css('border', '5px dotted white');
+                $(`#${timetable[day][2]}`).find(".headerText").css('border-radius','100%').css('padding','5px 20px').css('border', '5px dotted white');
+                $(`#${timetable[day][3]}`).find(".headerText").css('border-radius','100%').css('padding','5px 20px').css('border', '5px dotted white');
             }
        
         $(".bossSelector").click(()=>{ //prevent more than 3 bosses
