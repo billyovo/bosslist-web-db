@@ -186,26 +186,19 @@
         $(".loadingScreen").remove();
         })
 
-        var timetable = new Array(7);   //today boss
-            timetable[0] = ["A","B","C","D"];
-            timetable[1] = ["E","F","G","A"];
-            timetable[2] = ["B","C","D","E"];
-            timetable[3] = ["F","G","A","B"];
-            timetable[4] = ["C","D","E","F"];
-            timetable[5] = ["G","A","B","C"];
-            timetable[6] = ["D","E","F","G"];
+            const timetable = [["A","B","C","D"],["E","F","G","A"],["B","C","D","E"],["F","G","A","B"],["C","D","E","F"],["G","A","B","C"], ["D","E","F","G"]];
 
-            var today = new Date();
+            let today = new Date();
 
-            var time_hour = today.getHours();
-            var time_min = today.getMinutes();
-            var time_compare = time_hour*60 + time_min;
+            let time_hour = today.getHours();
+            let time_min = today.getMinutes();
+            let time_compare = time_hour*60 + time_min;
 
-            var boss_hour = 19;
+            let boss_hour = 19;
             const boss01 = 19*60+30;
             const boss02 = 21*60+30;   
 
-            var day = today.getDay();
+            let day = today.getDay();
 
             if(time_compare>boss02){ //after 9:30pm set tomorrow
                 day++;
@@ -215,7 +208,7 @@
                 boss_hour = 21;
             }
         
-            if(boss_hour==19){  //730
+            if(boss_hour===19){  //730
                 $(`#${timetable[day][0]}`).find(".headerText").css('border-radius','100%').css('padding','0px 30px').css('border', '5px dotted white');
                 $(`#${timetable[day][1]}`).find(".headerText").css('border-radius','100%').css('padding','0px 30px').css('border', '5px dotted white');
             }
@@ -237,11 +230,17 @@
             $('#addSuccessText').css('visibility','hidden');
         })
 
+        function disableDeleteMode(){
+            enabledDelete = false;
+            $('#removeIcon').addClass('fa-trash-alt');
+            $('.playerRecord').css('box-shadow', 'none');
+            $('.recordCard').css('cursor', 'no-drop');
+            $('input[type=checkbox]').css('visibility','visible');
+        }
+
         $('#addModal').click(()=>{
             if(enabledDelete){
-                enabledDelete = false;
-                $('#removeIcon').addClass('fa-trash-alt');
-                $('.playerRecord').css('box-shadow', 'none');
+                disableDeleteMode();
             }
         })
 
@@ -311,8 +310,8 @@
                         </th>
                     </tr>
                 `;
-                $(`#${newPlayer.boss01} .placeholder:last`).before(newRecord);
-                $(`#${newPlayer.boss02} .placeholder:last`).before(newRecord);
+                $(`#${newPlayer.boss01} tr:last`).after(newRecord);
+                $(`#${newPlayer.boss02} tr:last`).after(newRecord);
                 
                 $(".bossSelector").prop("checked",false);
                 $("#inputName, #avatarLink").val("");
@@ -349,11 +348,10 @@
                 $('.recordCard').css('cursor', 'no-drop');
                 $('#removeIcon').removeClass('fa-trash-alt');
                 $('.playerRecord').css('box-shadow', '0px 0px 3px 3px rgb(255,0,0)');
+                $('input[type=checkbox]').css('visibility','hidden');
             }
             else{
-                enabledDelete = false;
-                $('#removeIcon').addClass('fa-trash-alt');
-                $('.playerRecord').css('box-shadow', 'none');
+                disableDeleteMode();
             }
         })
 
