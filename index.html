@@ -229,6 +229,12 @@
             $('#addSuccessText').css('visibility','hidden');
         })
 
+        $('#addModal').on('show.bs.modal', ()=>{
+            if(enabledDelete){
+                disableDeleteMode();
+            }
+        })
+
         function disableDeleteMode(){
             enabledDelete = false;
             $('#removeIcon').addClass('fa-trash-alt');
@@ -237,12 +243,6 @@
             $('input[type=checkbox]').css('visibility','visible');
             $('.recordCard').attr('tabindex','-1');
         }
-
-        $('#addModal').click(()=>{
-            if(enabledDelete){
-                disableDeleteMode();
-            }
-        })
 
         $('#add').click(()=>{
             let isValid = true;
