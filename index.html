@@ -235,6 +235,7 @@
             $('.playerRecord').css('box-shadow', 'none');
             $('.recordCard').css('cursor', 'no-drop');
             $('input[type=checkbox]').css('visibility','visible');
+            $('.recordCard').attr('tabindex','-1');
         }
 
         $('#addModal').click(()=>{
@@ -348,6 +349,7 @@
                 $('#removeIcon').removeClass('fa-trash-alt');
                 $('.playerRecord').css('box-shadow', '0px 0px 3px 3px rgb(255,0,0)');
                 $('input[type=checkbox]').css('visibility','hidden');
+                $('.recordCard').attr('tabindex','12');
             }
             else{
                 disableDeleteMode();
