@@ -22,7 +22,7 @@
         background-attachment: fixed;
         background-size: 100% 100%;
     }
-    html, body, .container-fluid{
+    html, body{
         padding: 0;
         margin: 0;
         font-family: 'Noto Sans JP', sans-serif;
@@ -30,32 +30,59 @@
         width: 100vw;
     }
 
-    #forum{
+    .container-fluid{
+        padding: 0;
+        margin: 0;
+        height: 100%;
+    }
+
+    .forum{
         color: whitesmoke;
         font-size: 30px;
         padding: 20px;
     }
+
+    @media screen and (max-width: 768px) {
+        .navbar {
+            max-height: 80px;
+        }
+        #timetableNav, .navIcon{
+            display: none;
+        }
+        .sideFunctions{
+            width: 70px;
+            height: 50px;
+        }
+        .d-flex{
+            display: none;
+        }
+    }
+    
 </style>
+
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between navbar-expand-md">
             <ul class="navbar-nav">
-                <li class="nav-item active px-2">
-                    <img src="assets/icon.webp" height="50" width="50" class="rounded-circle">
+                <li class="nav-item active px-2 navIcon">
+                    <img src="assets/icon.webp" height="50" width="50" class="rounded-circle" id="smallImage">
                 </li>
                 <li class="nav-item px-2">
                   <a class="nav-link" href="index.html">Players</a>
                 </li>
-                <li class="nav-item active px-2">
+                <li class="nav-item active px-2" id="timetableNav">
                     <a class="nav-link" href="timetable.html">Timetable</a>
                 </li>
             </ul>
         </nav>
-
-        <div class="d-flex w-100 justify-content-center align-middle align-items-center flex-column"> 
-            <img src="assets/timetable.webp" height="60%" width="60%">
-            <a href="https://forum.letsdream.today/threads/587/" id="forum">Town Forum</a>
-            <a href="http://towns.letsdream.today/" id="forum">Town Website</a>
+  
+        <div class="d-flex w-100 h-100 justify-content-center align-middle align-items-center flex-column"> 
+            <img src="assets/timetable.webp" height="60%" width="50%">
+            <a href="https://forum.letsdream.today/threads/587/" class="forum">Town Forum</a>
+            <a href="http://towns.letsdream.today/" class="forum">Town Website</a>
         </div>
+    
     </div>
+
+</div>
 </body>
