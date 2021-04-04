@@ -201,7 +201,7 @@
 
             let today = new Date();
 
-            let time_hour = today.getHours();
+            let time_hour = (today.getUTCHours()+8)%24;
             let time_min = today.getMinutes();
             let time_compare = time_hour*60 + time_min;
 
