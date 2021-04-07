@@ -4,6 +4,7 @@
   <title>Joker哥哥屋企個池塘</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="letsdream.today, 築夢物語, minecraft">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico">
@@ -35,12 +36,22 @@
     }
 
     .forum{
-        color: whitesmoke;
         font-size: 30px;
         padding: 20px;
     }
 
-    @media screen and (max-width: 768px) {
+    .imageContainer{
+        height: 80vh;
+        width: 90%;
+    }
+    .phoneButton{
+        display: none;
+        padding: 50px;
+        margin: 50px;
+        font-size: 40px;
+    }
+
+    @media screen and (max-width: 576px) {
         .navbar {
             max-height: 80px;
         }
@@ -51,13 +62,33 @@
             width: 70px;
             height: 50px;
         }
-        .d-flex{
+        .imageContainer{
             display: none;
+        }
+        .phoneButton{
+            display: block;
         }
     }
     
 </style>
+<script>
+    function toggleFullscreen() {
+        let elem = document.getElementById("timetable");
+        if (!document.fullscreenElement) {
+          elem.requestFullscreen().catch(err => {
+            alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+          });
+        } else {
+          document.exitFullscreen();
+     }
+    }
+$(document).ready(()=>{
+    $('#timetable, .phoneButton').click(()=>{
+        toggleFullscreen();
+    })
+   })
 
+</script>
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between navbar-expand-md">
@@ -73,11 +104,15 @@
                 </li>
             </ul>
         </nav>
-  
-        <div class="d-flex w-100 h-100 justify-content-center align-middle align-items-center flex-column"> 
-            <img src="assets/timetable.webp" height="60%" width="50%">
-            <a href="https://forum.letsdream.today/threads/587/" class="forum">Town Forum</a>
-            <a href="http://towns.letsdream.today/" class="forum">Town Website</a>
+        <div class="d-flex w-100 justify-content-center align-middle align-items-center flex-column"> 
+            <div class="imageContainer">
+                <img src="assets/timetable.webp" height="100%" width="100%" id="timetable">
+            </div>
+            <button type="button" class="btn btn-info phoneButton">Click me to view timetable</button>
+            <div>
+                <a href="https://forum.letsdream.today/threads/587/" class="forum text-dark">Town Forum</a>
+                <a href="http://towns.letsdream.today/" class="forum text-dark">Town Website</a>
+            </div>
         </div>
     
     </div>
