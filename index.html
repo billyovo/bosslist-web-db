@@ -212,7 +212,7 @@
 
             let day = today.getDay();
 
-            if(time_compare>boss02 || (today.getUTCHours()+8)>=24){ //after 9:30pm set tomorrow
+            if(time_compare>boss02){ //after 9:30pm set tomorrow
                 day++;
                 day%=7;
             }
