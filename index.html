@@ -413,12 +413,8 @@
             }
         })
 
-        fetch(ENDPOINT+'/delete-players', {
-          method: 'POST', 
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({"name": toBeDeleted}),
+        fetch(ENDPOINT+`/players/${toBeDeleted}`, {
+          method: 'DELETE', 
         })
         .then(response => response.text())
         .then(data=>console.log(data))
